@@ -1,13 +1,23 @@
+
+import dotenv from 'dotenv';
+dotenv.config()
+
+
 import { createServer } from 'node:http';
 import express from 'express';
 import { Server } from 'socket.io';
+
 
 const app = express();
 const server = createServer(app);
 
 const io = new Server(server, {
-  cors: { origin: '*' },
+  cors: {
+    origin: process.env.BACKEND_URL,
+  },
 });
+
+
 
 const GROUP_ROOM = 'group';
 const onlineUsers = new Set();
@@ -56,6 +66,6 @@ io.on('connection', (socket) => {
   });
 });
 
-server.listen(4600, () => {
-  console.log('Server running on http://localhost:4600');
+server.listen(process.env.PORT || 4600, () => {
+  console.log(`Server running on http://localhost:${process.env.PORT || 4600}`);
 });

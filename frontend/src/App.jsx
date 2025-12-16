@@ -17,7 +17,8 @@ export default function App() {
 
   // SOCKET
   useEffect(() => {
-    socket.current = io('http://localhost:4600');
+    socket.current = io(import.meta.env.VITE_BACKEND_URL);
+
 
     socket.current.on('users', (list) => setUsers(list));
 
